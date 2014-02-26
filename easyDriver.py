@@ -19,9 +19,9 @@ class EasyDriver(unittest.TestCase):
 
         driver.get("https://itunesconnect.apple.com")
         driver.find_element_by_id("accountname").clear()
-        driver.find_element_by_id("accountname").send_keys("caesars321@gmail.com")
+        driver.find_element_by_id("accountname").send_keys("fjzxd01@163.com")
         driver.find_element_by_id("accountpassword").clear()
-        driver.find_element_by_id("accountpassword").send_keys("Badperson1")
+        driver.find_element_by_id("accountpassword").send_keys("77Iloveyou")
         
         """
         for i in range(5):
@@ -38,7 +38,7 @@ class EasyDriver(unittest.TestCase):
         ret = goIn[1].click()
         print "click ret", ret
         driver.find_element_by_link_text("Manage Your Apps").click()
-        driver.find_element_by_css_selector("a[title=\"Nozomi\"] > div.app-icon > img").click()
+        driver.find_element_by_css_selector("div.app-icon > img").click()
         driver.find_element_by_link_text("Manage Game Center").click()
 
     def test_easy_driver(self):
@@ -48,9 +48,10 @@ class EasyDriver(unittest.TestCase):
         f = open('allTask')
         alltask = f.read()
         alltask = json.loads(alltask)
-        taskId = 6
+        #从1 开始
+        taskId = 1
 
-        for t in alltask[1:]:
+        for t in alltask:
             for smallId in xrange(1, 4):
                 #driver.get("https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wo/119.0.0.7.3.0.9.3.3.1.0.13.3.1.1.11.7.13.1.9.1")
 
@@ -58,7 +59,7 @@ class EasyDriver(unittest.TestCase):
                 driver.find_element_by_id("internalName").clear()
                 driver.find_element_by_id("internalName").send_keys(t[0]+str(smallId))
                 driver.find_element_by_id("vendorIdentifier").clear()
-                driver.find_element_by_id("vendorIdentifier").send_keys("nozomi%d.%d"%(taskId, smallId))
+                driver.find_element_by_id("vendorIdentifier").send_keys("lianyun%d.%d"%(taskId, smallId))
                 driver.find_element_by_id("achievementPoints").clear()
                 driver.find_element_by_id("achievementPoints").send_keys("1")
                 driver.find_element_by_id("visibleTrue").click()
@@ -73,7 +74,7 @@ class EasyDriver(unittest.TestCase):
 
                 language = driver.find_element_by_id("languageSelector")
                 allOptions = language.find_elements_by_tag_name("option")
-                allOptions[4].click()
+                allOptions[17].click()
 
                 driver.find_element_by_id("achievementDetailName").clear()
 
