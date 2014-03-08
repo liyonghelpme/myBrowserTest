@@ -5,6 +5,19 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import json
+cn = True
+if cn:
+    sel = 17
+    fn = 'allTask'
+    tn = 'cnnozomi'
+    taskId = 1
+    start = 0
+else:
+    sel = 4
+    fn = 'allTaskEng'
+    tn = 'newnozomi'
+    taskId = 1
+    start = 0
 
 class EasyDriver(unittest.TestCase):
     def setUp(self):
@@ -19,9 +32,9 @@ class EasyDriver(unittest.TestCase):
 
         driver.get("https://itunesconnect.apple.com")
         driver.find_element_by_id("accountname").clear()
-        driver.find_element_by_id("accountname").send_keys("fjzxd01@163.com")
+        driver.find_element_by_id("accountname").send_keys("lhr1234567@gmail.com")
         driver.find_element_by_id("accountpassword").clear()
-        driver.find_element_by_id("accountpassword").send_keys("77Iloveyou")
+        driver.find_element_by_id("accountpassword").send_keys("LinKaiJin1012")
         
         """
         for i in range(5):
@@ -38,20 +51,26 @@ class EasyDriver(unittest.TestCase):
         ret = goIn[1].click()
         print "click ret", ret
         driver.find_element_by_link_text("Manage Your Apps").click()
-        driver.find_element_by_css_selector("div.app-icon > img").click()
+        #driver.find_element_by_css_selector("div.app-icon > img").click()
+        allOptions = driver.find_elements_by_css_selector("div.app-icon > img")
+        print "touch App 1"
+        allOptions[1].click()
+
         driver.find_element_by_link_text("Manage Game Center").click()
 
     def test_easy_driver(self):
         self.login()
         driver = self.driver
 
-        f = open('allTask')
+        f = open(fn)
         alltask = f.read()
         alltask = json.loads(alltask)
         #从1 开始
-        taskId = 1
 
-        for t in alltask:
+        global taskId
+        global start
+        #taskId = 1
+        for t in alltask[start:]:
             for smallId in xrange(1, 4):
                 #driver.get("https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wo/119.0.0.7.3.0.9.3.3.1.0.13.3.1.1.11.7.13.1.9.1")
 
@@ -59,7 +78,7 @@ class EasyDriver(unittest.TestCase):
                 driver.find_element_by_id("internalName").clear()
                 driver.find_element_by_id("internalName").send_keys(t[0]+str(smallId))
                 driver.find_element_by_id("vendorIdentifier").clear()
-                driver.find_element_by_id("vendorIdentifier").send_keys("lianyun%d.%d"%(taskId, smallId))
+                driver.find_element_by_id("vendorIdentifier").send_keys(tn+"%d.%d"%(taskId, smallId))
                 driver.find_element_by_id("achievementPoints").clear()
                 driver.find_element_by_id("achievementPoints").send_keys("1")
                 driver.find_element_by_id("visibleTrue").click()
@@ -74,7 +93,9 @@ class EasyDriver(unittest.TestCase):
 
                 language = driver.find_element_by_id("languageSelector")
                 allOptions = language.find_elements_by_tag_name("option")
-                allOptions[17].click()
+                #english 4
+                #chinese 17
+                allOptions[sel].click()
 
                 driver.find_element_by_id("achievementDetailName").clear()
 
@@ -90,7 +111,7 @@ class EasyDriver(unittest.TestCase):
                 driver.find_element_by_id("achievementDetailAfterEarnedDescription").send_keys(t[2+smallId-1])
                 #driver.find_element_by_id("fileInput_achievementImage").clear()
                 #driver.find_element_by_id("fileInput_achievementImage").click()
-                driver.find_element_by_id("fileInput_achievementImage").send_keys(("C:\\Users\\Administrator\\Desktop\\achieve.png"))
+                driver.find_element_by_id("fileInput_achievementImage").send_keys(("C:\\Users\\Administrator\\Desktop\\myBrowserTest\\achieve.png"))
                 while True:
                     time.sleep(10)
                     print  "finish Sleep begin click"
@@ -102,7 +123,9 @@ class EasyDriver(unittest.TestCase):
                     except NoSuchElementException, e:
                         print "not button"
 
-                driver.find_element_by_name("0.0.7.3.0.9.3.1.1.1.0.21.2.0.1.1.1").click()
+                print "find save button to click"
+                #driver.find_element_by_name("0.0.7.3.0.9.3.1.1.1.0.21.2.0.1.1.1").click()
+                driver.find_element_by_class_name("saveChangesActionButton").click()
             taskId += 1
     
     def is_element_present(self, how, what):
